@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.die_4, R.drawable.die_5,R.drawable.die_6};
 
     // data models
+    DecathlonModel decathlonModel;
     MinigameModel gameModel;
 
     @Override
@@ -34,15 +35,25 @@ public class MainActivity extends AppCompatActivity {
             imageButtons[i] = (ImageButton) findViewById(imageButtonIds[i]);
         }
 
-        gameModel = new MinigameModel110mHurdle(); // TODO: args?
+        decathlonModel = new DecathlonModel();
+        initMinigame();
+    }
 
+    private void initMinigame() {
+        gameModel = decathlonModel.getCurrentMinigame();
         gameModel.initEvent();
         renderUI();
     }
 
     // Called when Roll button is pressed
     public void buttonPressedRoll(View view) {
-        gameModel.buttonPressedRoll();
+        if (gameModel.roundDone()) {
+            decathlonModel.startNextMinigame();
+            initMinigame();
+        } else {
+            gameModel.buttonPressedRoll();
+        }
+
         renderUI();
     }
 
@@ -69,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
         rollButton.setText(uiInfo.rollButtonString);
         lockButton.setEnabled(uiInfo.lockButtonEnabled);
         lockButton.setText(uiInfo.lockButtonString);
+
+        // TODO: this is kinda a hack
+        if (gameModel.roundDone()) {
+            rollButton.setText(R.string.button_nextEvent);
+            rollButton.setEnabled(true);
+        }
 
         renderDice();
     }

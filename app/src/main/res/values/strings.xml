@@ -3,4 +3,5 @@
     <string name="button_roll">Roll</string>
     <string name="button_reroll">Reroll</string>
     <string name="button_lock">Lock</string>
+    <string name="button_nextEvent">Next Event</string>
 </resources>
