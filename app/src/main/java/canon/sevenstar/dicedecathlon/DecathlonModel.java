@@ -11,11 +11,8 @@ public class DecathlonModel {
     public DecathlonModel() {
         eventIndex = 0;
 
-        minigameModels = new MinigameModel[4];
-        minigameModels[0] = new MinigameModel100m();
-        minigameModels[1] = new MinigameModel400m();
-        minigameModels[2] = new MinigameModel1500m();
-        minigameModels[3] = new MinigameModel110mHurdle();
+        minigameModels = new MinigameModel[1];
+        minigameModels[0] = new MinigameModelShotput();
     }
 
     public int getMinigameIndex() {

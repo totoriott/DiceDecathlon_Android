@@ -18,10 +18,6 @@ public interface MinigameModel {
 
     public void initEvent();
 
-    public int[] calculateSetScores();
-
-    public int calculateScore();
-
     public boolean roundDone();
 
     public HeaderUiInfo getHeaderUiInfo();
