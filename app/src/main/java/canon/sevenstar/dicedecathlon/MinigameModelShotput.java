@@ -110,7 +110,7 @@ public class MinigameModelShotput implements MinigameModel {
         }
         scoreString += ")";
 
-        String rerollString = "";
+        String rerollString = "Attempt " + (attemptNumber+1) + " of " + (totalAttempts);
 
         uiInfo.scoreString = scoreString;
         uiInfo.infoString = rerollString;

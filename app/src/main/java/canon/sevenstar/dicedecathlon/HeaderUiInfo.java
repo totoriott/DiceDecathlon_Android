@@ -12,4 +12,11 @@ public class HeaderUiInfo {
     public String lockButtonString;
     public boolean rollButtonEnabled;
     public boolean lockButtonEnabled;
+
+    public HeaderUiInfo() {
+        scoreString = "";
+        infoString = "";
+        rollButtonString = "";
+        lockButtonString = "";
+    }
 }
