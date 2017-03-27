@@ -6,22 +6,25 @@ import java.util.Random;
  * Created by canon on 3/27/2017.
  */
 
-public class MinigameModelHighJump implements MinigameModel {
+public class MinigameModelPoleVault implements MinigameModel {
 
     int[] diceValues;
     DiceState[] diceStates;
 
-    int totalDice = 5;
+    int totalDice;
+    int startDice = 2;
+    int maxDice = 8;
     int score;
     boolean stillAlive;
     boolean selectingHeight;
+    boolean selectingDice;
     int barHeight;
     int attemptNumber;
     int totalAttempts = 3;
     int lastRoll;
 
     int startBarHeight = 10;
-    int maxBarHeight = 30;
+    int maxBarHeight = 48;
     int barIncrement = 2;
 
     // Called when Roll button is pressed
@@ -32,20 +35,31 @@ public class MinigameModelHighJump implements MinigameModel {
 
         if (selectingHeight) {
             selectingHeight = false;
+            selectingDice = true;
             attemptNumber = 0;
+            totalDice = (int)Math.ceil(barHeight / 6.0); // give you the minimum number of dice you could succeed with
             initDice();
+        } else if (selectingDice) {
+            selectingDice = false;
         }
         else {
             Random rand = new Random(); // TODO: init properly
 
             // roll next die
             int sumOfRoll = 0;
+            boolean faulted = false;
             for (int i = 0; i < totalDice; i++) {
                 int nextValue = rand.nextInt(6) + 1;
                 diceStates[i] = DiceState.UNLOCKED;
                 diceValues[i] = nextValue;
+                if (nextValue == 1) {
+                    faulted = true;
+                }
 
                 sumOfRoll += nextValue;
+            }
+            if (faulted) {
+                sumOfRoll = 0;
             }
             lastRoll = sumOfRoll;
 
@@ -85,6 +99,8 @@ public class MinigameModelHighJump implements MinigameModel {
 
         if (selectingHeight && barHeight + barIncrement <= maxBarHeight) {
             barHeight += barIncrement;
+        } else if (selectingDice && totalDice < maxDice) {
+            totalDice++;
         }
     }
 
@@ -92,6 +108,7 @@ public class MinigameModelHighJump implements MinigameModel {
         barHeight = startBarHeight;
         stillAlive = true;
         selectingHeight = true;
+        selectingDice = false;
         initDice();
     }
 
@@ -111,7 +128,7 @@ public class MinigameModelHighJump implements MinigameModel {
         return diceStates;
     }
 
-    public String getMinigameName() { return "High Jump"; };
+    public String getMinigameName() { return "Pole Vault"; };
 
     // TODO: View stuff should technically go in a view class; separate this later
     public HeaderUiInfo getHeaderUiInfo() {
@@ -122,13 +139,20 @@ public class MinigameModelHighJump implements MinigameModel {
         String scoreString = "Score: " + calculateScore();
 
         String rerollString = "";
-        if (!selectingHeight) {
+        if (!selectingHeight && !selectingDice) {
             rerollString = (totalAttempts - attemptNumber) + " attempt(s) left to roll " + barHeight;
             if (attemptNumber != 0) {
-                rerollString = "Rolled " + lastRoll + "; " + rerollString;
+                if (lastRoll == 0) {
+                    rerollString = "Faulted; " + rerollString;
+                } else {
+                    rerollString = "Rolled " + lastRoll + "; " + rerollString;
+                }
+
             }
         } else if (selectingHeight && score > 0) {
             rerollString = "Rolled " + lastRoll + " and cleared bar " + score;
+        } else if (selectingDice) {
+            rerollString = "Select number of dice to roll for bar " + barHeight + " (max " + maxDice + ")";
         }
 
         uiInfo.scoreString = scoreString;
@@ -139,6 +163,11 @@ public class MinigameModelHighJump implements MinigameModel {
             uiInfo.lockButtonString = "Skip " + barHeight;
             uiInfo.rollButtonEnabled = true;
             uiInfo.lockButtonEnabled = barHeight + barIncrement <= maxBarHeight;
+        } else if (selectingDice) {
+            uiInfo.rollButtonString = "Roll " + totalDice;
+            uiInfo.lockButtonString = "Add Die";
+            uiInfo.rollButtonEnabled = true;
+            uiInfo.lockButtonEnabled = totalDice < maxDice;
         } else {
             uiInfo.rollButtonString = "Roll";
             uiInfo.rollButtonEnabled = stillAlive;
