@@ -13,7 +13,7 @@ public class MinigameModel100m implements MinigameModel {
 
     int rerolls;
     int setNumber;
-    int diceInSet = 4;
+    int diceInSet = 4; // TODO: should move these to finals, but then that breaks subclasses
     int totalSets = 2;
     boolean firstRollOfSet;
 

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             imageButtons[i] = (ImageButton) findViewById(imageButtonIds[i]);
         }
 
-        gameModel = new MinigameModel100m(); // TODO: args?
+        gameModel = new MinigameModel110mHurdle(); // TODO: args?
 
         gameModel.initEvent();
         renderUI();
