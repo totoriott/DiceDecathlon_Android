@@ -23,4 +23,6 @@ public interface MinigameModel {
     public int calculateScore();
 
     public boolean roundDone();
+
+    public HeaderUiInfo getHeaderUiInfo();
 }

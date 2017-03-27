@@ -1,5 +1,7 @@
 package canon.sevenstar.dicedecathlon;
 
+import android.content.res.Resources;
+
 import java.util.Random;
 
 /**
@@ -109,7 +111,49 @@ public class MinigameModel100m implements MinigameModel {
     public int[] getDiceValues() {
         return diceValues;
     }
+
     public DiceState[] getDiceStates() {
         return diceStates;
+    }
+
+    // TODO: View stuff should technically go in a view class; separate this later
+    public HeaderUiInfo getHeaderUiInfo() {
+        HeaderUiInfo uiInfo = new HeaderUiInfo();
+
+        // TODO: make this loc
+        // display score
+        int[] setScores = calculateSetScores();
+        String scoreString = "Score: ";
+        for (int i = 0; i < setScores.length; i++) {
+            if (i != 0) {
+                scoreString += " + ";
+            }
+            scoreString += setScores[i];
+        }
+        scoreString += " = " + calculateScore();
+
+        String rerollString = "Rerolls left: " + rerolls;
+
+        uiInfo.scoreString = scoreString;
+        uiInfo.infoString = rerollString;
+
+        uiInfo.rollButtonString = "";
+        uiInfo.lockButtonString = "";
+        if (roundDone()) {
+            uiInfo.rollButtonEnabled = false;
+            uiInfo.lockButtonEnabled = false;
+        } else if (firstRollOfSet) {
+            uiInfo.rollButtonString = "Roll"; //TODO: FIX CRASH//Resources.getSystem().getString(R.string.button_roll);
+            uiInfo.lockButtonString = "Lock"; //Resources.getSystem().getString(R.string.button_lock);
+            uiInfo.rollButtonEnabled = true;
+            uiInfo.lockButtonEnabled = false;
+        } else {
+            uiInfo.rollButtonString = "Reroll"; //Resources.getSystem().getString(R.string.button_reroll);
+            uiInfo.lockButtonString = "Lock"; //Resources.getSystem().getString(R.string.button_lock);
+            uiInfo.rollButtonEnabled = rerolls > 0;
+            uiInfo.lockButtonEnabled = true;
+        }
+
+        return uiInfo;
     }
 }

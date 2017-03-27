@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.Random;
-
 public class MainActivity extends AppCompatActivity {
     int[] imageButtonIds = {R.id.imageButton0, R.id.imageButton1, R.id.imageButton2, R.id.imageButton3,
             R.id.imageButton4, R.id.imageButton5, R.id.imageButton6, R.id.imageButton7};
@@ -58,38 +56,19 @@ public class MainActivity extends AppCompatActivity {
         TextView scoreView = (TextView)findViewById(R.id.scoreView);
         TextView infoView = (TextView)findViewById(R.id.infoView);
 
-        // TODO: make this loc
-        // display score
-        int[] setScores = gameModel.calculateSetScores();
-        String scoreString = "Score: ";
-        for (int i = 0; i < setScores.length; i++) {
-            if (i != 0) {
-                scoreString += " + ";
-            }
-            scoreString += setScores[i];
-        }
-        scoreString += " = " + gameModel.calculateScore();
-        scoreView.setText(scoreString);
-
-        // display reroll count
-        // TODO: unbreak this
-        // infoView.setText("Rerolls left: " + rerolls);
-
         // render buttons
         Button rollButton = (Button)findViewById(R.id.button);
         Button lockButton = (Button)findViewById(R.id.button2);
-        if (gameModel.roundDone()) {
-            rollButton.setEnabled(false);
-            lockButton.setEnabled(false);
-        } else if (false) { // TODO: unbreak this firstRollOfSet) {
-            rollButton.setText(R.string.button_roll);
-            rollButton.setEnabled(true);
-            lockButton.setEnabled(false);
-        } else {
-            rollButton.setText(R.string.button_reroll);
-            rollButton.setEnabled(true); // TODO: unbreak this gameModel.rerolls > 0);
-            lockButton.setEnabled(true);
-        }
+
+        HeaderUiInfo uiInfo = gameModel.getHeaderUiInfo();
+
+        // TODO: if blank, ignore
+        scoreView.setText(uiInfo.scoreString);
+        infoView.setText(uiInfo.infoString);
+        rollButton.setEnabled(uiInfo.rollButtonEnabled);
+        rollButton.setText(uiInfo.rollButtonString);
+        lockButton.setEnabled(uiInfo.lockButtonEnabled);
+        lockButton.setText(uiInfo.lockButtonString);
 
         renderDice();
     }
