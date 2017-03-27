@@ -12,7 +12,7 @@ public class DecathlonModel {
         eventIndex = 0;
 
         minigameModels = new MinigameModel[1];
-        minigameModels[0] = new MinigameModelPoleVault();
+        minigameModels[0] = new MinigameModelDiscus();
     }
 
     public int getMinigameIndex() {

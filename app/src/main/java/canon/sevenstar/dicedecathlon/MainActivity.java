@@ -41,11 +41,17 @@ public class MainActivity extends AppCompatActivity {
         mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
             @Override
             public void onVerticalShake() {
-                buttonPressedRoll(null);
+                Button rollButton = (Button)findViewById(R.id.button);
+                if (rollButton.isEnabled()) {
+                    buttonPressedRoll(null);
+                }
             }
 
             public void onHorizontalShake() {
-                buttonPressedLock(null);
+                Button lockButton = (Button)findViewById(R.id.button2);
+                if (lockButton.isEnabled()) {
+                    buttonPressedLock(null);
+                }
             }
         });
     }
