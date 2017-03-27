@@ -14,6 +14,9 @@ public class MinigameModel110mHurdle extends MinigameModel100m {
     }
 
     @Override
+    public String getMinigameName() { return "110m Hurdles"; };
+
+    @Override
     public int[] calculateSetScores() {
         int[] scores = new int[totalSets];
 

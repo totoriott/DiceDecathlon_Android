@@ -11,4 +11,7 @@ public class MinigameModel1500m extends MinigameModel100m {
         totalSets = 8;
         super.initEvent();
     }
+
+    @Override
+    public String getMinigameName() { return "1500m Dash"; };
 }

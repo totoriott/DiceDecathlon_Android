@@ -116,6 +116,8 @@ public class MinigameModel100m implements MinigameModel {
         return diceStates;
     }
 
+    public String getMinigameName() { return "100m Dash"; };
+
     // TODO: View stuff should technically go in a view class; separate this later
     public HeaderUiInfo getHeaderUiInfo() {
         HeaderUiInfo uiInfo = new HeaderUiInfo();

@@ -25,4 +25,6 @@ public interface MinigameModel {
     public boolean roundDone();
 
     public HeaderUiInfo getHeaderUiInfo();
+
+    public String getMinigameName();
 }

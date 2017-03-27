@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Called when Roll button is pressed
     public void buttonPressedRoll(View view) {
-        if (gameModel.roundDone()) {
+        if (gameModel.roundDone() && !decathlonModel.onFinalEvent()) {
             decathlonModel.startNextMinigame();
             initMinigame();
         } else {
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderUI() {
+        TextView eventHeaderView = (TextView)findViewById(R.id.eventHeaderView);
         TextView scoreView = (TextView)findViewById(R.id.scoreView);
         TextView infoView = (TextView)findViewById(R.id.infoView);
 
@@ -72,14 +73,19 @@ public class MainActivity extends AppCompatActivity {
         Button lockButton = (Button)findViewById(R.id.button2);
 
         HeaderUiInfo uiInfo = gameModel.getHeaderUiInfo();
+        String eventString = "Round " + (decathlonModel.getMinigameIndex()+1) + ": " + gameModel.getMinigameName();
 
-        // TODO: if blank, ignore
+        eventHeaderView.setText(eventString);
         scoreView.setText(uiInfo.scoreString);
         infoView.setText(uiInfo.infoString);
         rollButton.setEnabled(uiInfo.rollButtonEnabled);
-        rollButton.setText(uiInfo.rollButtonString);
+        if (uiInfo.rollButtonString.length() > 0) {
+            rollButton.setText(uiInfo.rollButtonString);
+        }
         lockButton.setEnabled(uiInfo.lockButtonEnabled);
-        lockButton.setText(uiInfo.lockButtonString);
+        if (uiInfo.lockButtonString.length() > 0) {
+            lockButton.setText(uiInfo.lockButtonString);
+        }
 
         // TODO: this is kinda a hack
         if (gameModel.roundDone()) {

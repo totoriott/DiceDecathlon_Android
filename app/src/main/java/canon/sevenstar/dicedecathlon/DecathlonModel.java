@@ -18,6 +18,14 @@ public class DecathlonModel {
         minigameModels[3] = new MinigameModel110mHurdle();
     }
 
+    public int getMinigameIndex() {
+        return eventIndex;
+    }
+
+    public boolean onFinalEvent() {
+        return eventIndex == minigameModels.length - 1;
+    }
+
     public void startNextMinigame() {
         if (eventIndex < minigameModels.length) {
             eventIndex++;
