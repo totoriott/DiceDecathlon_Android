@@ -5,5 +5,5 @@ package canon.sevenstar.dicedecathlon;
  */
 
 public enum DiceState {
-    DISABLED, FROZEN, LOCKED, UNLOCKED
+    DISABLED, FROZEN, LOCKED, UNLOCKED, INVALID
 }

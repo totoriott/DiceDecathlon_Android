@@ -32,10 +32,13 @@ public class MinigameModelDiscus extends MinigameModel {
             for (int i = 0; i < totalDice; i++) {
                 if (diceStates[i] == DiceState.LOCKED) {
                     diceStates[i] = DiceState.FROZEN;
-                } else if (diceStates[i] == DiceState.UNLOCKED) {
+                } else if (diceStates[i] == DiceState.UNLOCKED || diceStates[i] == DiceState.INVALID) {
                     diceValues[i] = rand.nextInt(6) + 1;
                     if (valueIsLockable(diceValues[i])) {
                         lockableDieFound = true;
+                        diceStates[i] = DiceState.UNLOCKED;
+                    } else {
+                        diceStates[i] = DiceState.INVALID;
                     }
                 }
             }
@@ -132,7 +135,7 @@ public class MinigameModelDiscus extends MinigameModel {
 
     public boolean areAllDiceLocked() {
         for (int i = 0; i < totalDice; i++) {
-            if (diceStates[i] == DiceState.UNLOCKED) {
+            if (diceStates[i] == DiceState.UNLOCKED || diceStates[i] == DiceState.INVALID) {
                 return false;
             }
         }

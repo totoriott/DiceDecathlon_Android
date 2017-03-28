@@ -30,6 +30,7 @@ public class MinigameModelShotput extends MinigameModel {
             // add die to score
             attemptScores[attemptNumber] += nextValue;
             if (nextValue == 1) {
+                diceStates[dieNumber] = DiceState.INVALID;
                 attemptScores[attemptNumber] = 0;
             }
 

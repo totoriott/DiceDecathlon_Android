@@ -169,6 +169,10 @@ public class MainActivity extends AppCompatActivity {
                 case UNLOCKED:
                     imageButtons[i].setBackgroundColor(Color.WHITE);
                     break;
+
+                case INVALID:
+                    imageButtons[i].setBackgroundColor(Color.RED);
+                    break;
             }
 
             // render dice value as appropriate

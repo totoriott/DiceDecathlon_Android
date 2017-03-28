@@ -53,6 +53,7 @@ public class MinigameModelPoleVault extends MinigameModel {
                 diceStates[i] = DiceState.UNLOCKED;
                 diceValues[i] = nextValue;
                 if (nextValue == 1) {
+                    diceStates[i] = DiceState.INVALID;
                     faulted = true;
                 }
 
