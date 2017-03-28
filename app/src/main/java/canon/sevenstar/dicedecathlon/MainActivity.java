@@ -105,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         renderUI();
     }
 
+    public void buttonPressedDie(View view) {
+        gameModel.buttonPressedDie(Integer.parseInt(view.getTag().toString()));
+        renderUI();
+    }
+
     private void renderUI() {
         TextView eventHeaderView = (TextView)findViewById(R.id.eventHeaderView);
         TextView scoreView = (TextView)findViewById(R.id.scoreView);

@@ -6,15 +6,17 @@ import java.util.Random;
  * Created by canon on 3/27/2017.
  */
 
-public class MinigameModelDiscus implements MinigameModel {
+public class MinigameModelDiscus extends MinigameModel {
     int[] diceValues;
     DiceState[] diceStates;
 
     int totalDice = 5;
     int attemptNumber;
     boolean attemptIsActive;
+    boolean firstRoll;
     int totalAttempts = 3;
     int[] attemptScores;
+    int diceLockedThisTime;
 
     public boolean valueIsLockable(int value) {
         return value % 2 == 0;
@@ -22,9 +24,7 @@ public class MinigameModelDiscus implements MinigameModel {
 
     // Called when Roll button is pressed
     public void buttonPressedRoll() {
-        // TODO: check if you've frozen enough dice
-
-        if (attemptIsActive) {
+        if (attemptIsActive && (diceLockedThisTime > 0 || firstRoll)) {
             Random rand = new Random(); // TODO: init properly
 
             int attemptScore = 0;
@@ -38,26 +38,44 @@ public class MinigameModelDiscus implements MinigameModel {
                         lockableDieFound = true;
                     }
                 }
-
-                attemptScore += diceValues[i];
             }
 
             if (!lockableDieFound) {
-                attemptScore = 0;
+                attemptScores[attemptNumber] = 0;
                 attemptIsActive = false;
             }
 
-            attemptScores[attemptNumber] = attemptScore;
+            diceLockedThisTime = 0;
+            firstRoll = false;
         }
     }
 
     // Called when Lock button is pressed
     public void buttonPressedLock() {
-        // TODO: check if you've frozen all dice
+        if ((attemptNumber < totalAttempts && diceLockedThisTime > 0) || (!attemptIsActive && !roundDone())) {
+            attemptIsActive = false;
+            if (attemptNumber < totalAttempts - 1) {
+                attemptNumber++;
+                initNewAttempt();
+            }
+        }
+    }
 
-        if (attemptNumber < totalAttempts + 1) {
-            attemptNumber++;
-            initNewAttempt();
+    public void buttonPressedDie(int dieIndex) {
+        if (attemptIsActive && !firstRoll) {
+            if (!valueIsLockable(diceValues[dieIndex])) {
+                return;
+            }
+
+            if (diceStates[dieIndex] == DiceState.UNLOCKED) {
+                diceStates[dieIndex] = DiceState.LOCKED;
+                diceLockedThisTime++;
+                attemptScores[attemptNumber] += diceValues[dieIndex];
+            } else if (diceStates[dieIndex] == DiceState.LOCKED) {
+                diceStates[dieIndex] = DiceState.UNLOCKED;
+                diceLockedThisTime--;
+                attemptScores[attemptNumber] -= diceValues[dieIndex];
+            }
         }
     }
 
@@ -81,6 +99,7 @@ public class MinigameModelDiscus implements MinigameModel {
         }
 
         attemptIsActive = true;
+        firstRoll = true;
     }
 
     public int[] calculateSetScores() {
@@ -98,7 +117,7 @@ public class MinigameModelDiscus implements MinigameModel {
     }
 
     public boolean roundDone() {
-        return attemptNumber == totalAttempts - 1 && !attemptIsActive;
+        return attemptNumber >= totalAttempts - 1 && !attemptIsActive;
     }
 
     public int[] getDiceValues() {
@@ -137,7 +156,18 @@ public class MinigameModelDiscus implements MinigameModel {
         }
         scoreString += ")";
 
-        String rerollString = "";
+        String rerollString = "Attempt " + (attemptNumber+1) + " of " + (totalAttempts);
+        if (attemptIsActive) {
+            if (firstRoll) {
+                rerollString += "; roll to begin";
+            } else if (diceLockedThisTime == 0) {
+                rerollString += "; select at least one die to lock";
+            } else {
+                rerollString += "; current score " + attemptScores[attemptNumber];
+            }
+        } else if (attemptScores[attemptNumber] == 0) {
+            rerollString += "; fouled";
+        }
 
         uiInfo.scoreString = scoreString;
         uiInfo.infoString = rerollString;
@@ -153,8 +183,8 @@ public class MinigameModelDiscus implements MinigameModel {
             uiInfo.rollButtonEnabled = false;
             uiInfo.lockButtonEnabled = true;
         } else {
-            uiInfo.rollButtonEnabled = !areAllDiceLocked();
-            uiInfo.lockButtonEnabled = areAllDiceLocked();
+            uiInfo.rollButtonEnabled = (firstRoll || diceLockedThisTime > 0) && !areAllDiceLocked();
+            uiInfo.lockButtonEnabled = diceLockedThisTime > 0;
         }
 
         return uiInfo;

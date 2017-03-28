@@ -33,7 +33,9 @@
         android:layout_toEndOf="@+id/imageButton1"
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
-        android:id="@+id/imageButton2" />
+        android:id="@+id/imageButton2"
+        android:tag="2"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -44,7 +46,9 @@
         android:layout_toEndOf="@+id/imageButton2"
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
-        android:id="@+id/imageButton3" />
+        android:id="@+id/imageButton3"
+        android:tag="3"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -54,7 +58,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="19dp"
-        android:id="@+id/imageButton4" />
+        android:id="@+id/imageButton4"
+        android:tag="4"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -63,7 +69,9 @@
         android:layout_alignBottom="@+id/imageButton4"
         android:layout_alignLeft="@+id/imageButton1"
         android:layout_alignStart="@+id/imageButton1"
-        android:id="@+id/imageButton5" />
+        android:id="@+id/imageButton5"
+        android:tag="5"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -72,7 +80,9 @@
         android:layout_alignBottom="@+id/imageButton5"
         android:layout_alignLeft="@+id/imageButton2"
         android:layout_alignStart="@+id/imageButton2"
-        android:id="@+id/imageButton6" />
+        android:id="@+id/imageButton6"
+        android:tag="6"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -81,7 +91,9 @@
         android:layout_alignBottom="@+id/imageButton6"
         android:layout_alignLeft="@+id/imageButton3"
         android:layout_alignStart="@+id/imageButton3"
-        android:id="@+id/imageButton7" />
+        android:id="@+id/imageButton7"
+        android:tag="7"
+        android:onClick="buttonPressedDie" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -90,17 +102,9 @@
         android:id="@+id/imageButton1"
         android:layout_alignTop="@+id/imageButton0"
         android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/die_1"
-        android:layout_marginTop="11dp"
-        android:id="@+id/imageButton0"
-        android:layout_below="@+id/button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toEndOf="@+id/button"
+        android:tag="1"
+        android:onClick="buttonPressedDie" />
 
     <Button
         android:text="@string/button_roll"
@@ -139,5 +143,17 @@
         android:layout_below="@+id/eventHeaderView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/die_1"
+        android:layout_marginTop="11dp"
+        android:id="@+id/imageButton0"
+        android:layout_below="@+id/button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="buttonPressedDie"
+        android:tag="0"/>
 
 </RelativeLayout>

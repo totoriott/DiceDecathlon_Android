@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by canon on 3/27/2017.
  */
 
-public class MinigameModelPoleVault implements MinigameModel {
+public class MinigameModelPoleVault extends MinigameModel {
 
     int[] diceValues;
     DiceState[] diceStates;

@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Created by canon on 3/27/2017.
 */
-public class MinigameModel100m implements MinigameModel {
+public class MinigameModel100m extends MinigameModel {
     int[] diceValues;
     DiceState[] diceStates;
 

@@ -5,22 +5,24 @@ import java.util.Random;
 /**
  * Created by canon on 3/27/2017.
 */
-public interface MinigameModel {
+public abstract class MinigameModel {
     // data models
-    public int[] getDiceValues();
-    public DiceState[] getDiceStates();
+    public abstract int[] getDiceValues();
+    public abstract DiceState[] getDiceStates();
 
     // Called when Roll button is pressed
-    public void buttonPressedRoll();
+    public abstract void buttonPressedRoll();
 
     // Called when Lock button is pressed
-    public void buttonPressedLock();
+    public abstract void buttonPressedLock();
 
-    public void initEvent();
+    public abstract void initEvent();
 
-    public boolean roundDone();
+    public abstract boolean roundDone();
 
-    public HeaderUiInfo getHeaderUiInfo();
+    public abstract HeaderUiInfo getHeaderUiInfo();
 
-    public String getMinigameName();
+    public abstract String getMinigameName();
+
+    public void buttonPressedDie(int dieIndex) {};
 }
