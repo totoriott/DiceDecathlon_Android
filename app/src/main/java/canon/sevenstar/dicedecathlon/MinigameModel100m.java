@@ -30,8 +30,12 @@ public class MinigameModel100m extends MinigameModel {
 
             // roll dice
             for (int i = 0; i < 8; i++) {
-                if (diceStates[i] == DiceState.UNLOCKED) {
+                if (diceStates[i] == DiceState.UNLOCKED || diceStates[i] == DiceState.INVALID) {
                     diceValues[i] = rand.nextInt(6) + 1;
+                    diceStates[i] = DiceState.UNLOCKED;
+                    if (diceValues[i] == 6 && sixesAreBad()) {
+                        diceStates[i] = DiceState.INVALID;
+                    }
                 }
             }
         }
@@ -83,7 +87,7 @@ public class MinigameModel100m extends MinigameModel {
             for (int die = 0; die < diceInSet; die++) {
                 int dieIndex = i * diceInSet + die;
                 if (diceStates[dieIndex] != DiceState.DISABLED) {
-                    if (diceValues[dieIndex] == 6) {
+                    if (diceValues[dieIndex] == 6 && sixesAreBad()) {
                         setScore -= 6;
                     } else {
                         setScore += diceValues[dieIndex];
@@ -117,6 +121,8 @@ public class MinigameModel100m extends MinigameModel {
     }
 
     public String getMinigameName() { return "100m Dash"; };
+
+    protected boolean sixesAreBad() { return true; }
 
     // TODO: View stuff should technically go in a view class; separate this later
     public HeaderUiInfo getHeaderUiInfo() {

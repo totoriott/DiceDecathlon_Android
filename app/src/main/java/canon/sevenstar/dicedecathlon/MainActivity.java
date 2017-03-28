@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case FROZEN:
-                    imageButtons[i].setBackgroundColor(Color.DKGRAY);
+                    imageButtons[i].setBackgroundColor(Color.CYAN);
                     break;
 
                 case LOCKED:
